@@ -37,6 +37,16 @@ public class UsuarioController : Controller
         return View("Logar", usuario);
     }
 
+
+    [HttpGet]
+    public IActionResult CriarUsuario()
+    {
+        return View(); 
+    }
+
+
+
+
     [HttpPost("criar")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
