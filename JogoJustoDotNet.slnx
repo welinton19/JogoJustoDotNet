@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="JogoJustoDotNet/JogoJustoDotNet.csproj" />
+  <Project Path="JogoJustoTest/JogoJustoTest.csproj" Id="ec763165-4b3e-4276-8d40-85ecfe5a83a5" />
+</Solution>
