@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JogoJustoDotNet.Auth;
 
-public class RoleRequeriment : IAuthorizationRequirement
+public class RoleRequirement : IAuthorizationRequirement
 {
     public string Role { get; }
-    public RoleRequeriment(string role)
+    public RoleRequirement(string role)
     {
         Role = role;
     }

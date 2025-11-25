@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace JogoJustoDotNet.Auth
 {
-    public class RoleAuthorizationHandler : AuthorizationHandler<RoleRequeriment>
+    public class RoleAuthorizationHandler : AuthorizationHandler<RoleRequirement>
     {
         private readonly ITokenService _tokenService;
 
@@ -12,7 +12,7 @@ namespace JogoJustoDotNet.Auth
             _tokenService = tokenService;
         }
 
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleRequeriment requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleRequirement requirement)
         {
             var httpContext = (context.Resource as Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)?.HttpContext;
             if (httpContext == null)
