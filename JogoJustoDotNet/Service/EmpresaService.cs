@@ -2,7 +2,7 @@
 
 namespace JogoJustoDotNet.Service;
 
-public class EmpresaService : IEmpresaRepository
+public class EmpresaService : IEmpresaService
 {
     private readonly IEmpresaRepository _empresaRepository;
     public EmpresaService(IEmpresaRepository empresaRepository)
@@ -18,3 +18,4 @@ public class EmpresaService : IEmpresaRepository
     public void DeletarEmpresa(int id) => _empresaRepository.DeletarEmpresa(id);
 
 }
+

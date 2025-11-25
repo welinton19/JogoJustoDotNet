@@ -1,15 +1,11 @@
-using AutoMapper;
+using System.Text;
 using JogoJustoDotNet.AppData;
+using JogoJustoDotNet.AppData.Repository;
 using JogoJustoDotNet.Auth;
-using JogoJustoDotNet.Models;
 using JogoJustoDotNet.Service;
-using JogoJustoDotNet.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Runtime.InteropServices;
-using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +13,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, RoleAuthorizationHandler>();
 
-#region configigurando autorizacao de papel
+builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+builder.Services.AddScoped<IEmpresaService, EmpresaService>();
+
+builder.Services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();
+builder.Services.AddScoped<IFuncionarioService, FuncionarioService>();
+
+builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+
+builder.Services.AddScoped<IMetaEsgRepository, MetaEsgRepository>();
+builder.Services.AddScoped<IMetaEsgService, MetaEsgService>();
+
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+#region configurando autorizacao de papel
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
@@ -38,8 +49,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 #endregion
-
-builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddAuthorization(options =>
 {
@@ -91,8 +100,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseRouting();
-
-app.UseAuthorization();
 
 app.MapControllers();
 app.MapControllerRoute(

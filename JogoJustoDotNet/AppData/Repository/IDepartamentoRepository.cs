@@ -2,7 +2,7 @@
 
 namespace JogoJustoDotNet.AppData.Repository;
 
-public interface IDepartamentoRepositry
+public interface IDepartamentoRepository
 {
     IEnumerable<DepartamentoModel> GetAllDepartamentos();
     DepartamentoModel GetDepartamentoById(int id);

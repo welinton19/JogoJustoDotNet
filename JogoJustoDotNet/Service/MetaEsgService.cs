@@ -3,7 +3,7 @@ using JogoJustoDotNet.Models;
 
 namespace JogoJustoDotNet.Service;
 
-public class MetaEsgService : IMetaEsgRepository
+public class MetaEsgService : IMetaEsgService
 {
    private readonly IMetaEsgRepository _metaEsgRepository;
 
