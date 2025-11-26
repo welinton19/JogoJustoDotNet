@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JogoJustoDotNet.Controllers;
 
-[ApiController]
+//[ApiController]
 [Route("meta-esg")]
 public class MetaEsgController : Controller
 {

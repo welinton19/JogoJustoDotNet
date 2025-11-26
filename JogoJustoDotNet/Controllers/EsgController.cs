@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JogoJustoDotNet.Controllers;
 
-[ApiController]
+//[ApiController]
 [Route("esg")]
 public class EsgController : ControllerBase
 {

@@ -2,7 +2,7 @@
 
 namespace JogoJustoDotNet.AppData.Repository;
 
-public class DepartamentoRepository : IDepartamentoRepositry
+public class DepartamentoRepository : IDepartamentoRepository
 {
     private readonly JogoDbContext _jogoDbContext;
 

@@ -1,4 +1,5 @@
-﻿//using AutoMapper;
+﻿using AutoMapper;
+
 using JogoJustoDotNet.AppData;
 using JogoJustoDotNet.Models;
 using JogoJustoDotNet.ViewModels;
@@ -12,14 +13,15 @@ public class UsuarioController : Controller
     private readonly JogoDbContext _jogoDbContext;
     private readonly IConfiguration _config;
     //private readonly HttpClient _httpClient;
-    //private readonly IMapper _mapper;
+    private readonly IMapper _mapper;
 
-    public UsuarioController(JogoDbContext jogoDbContext, IConfiguration config )
+    public UsuarioController(JogoDbContext jogoDbContext, IConfiguration config, IMapper mapper = null)
     {
         this._jogoDbContext = jogoDbContext;
         _config = config;
+        _mapper = mapper;
         //httpClient = httpClient;
-        //_mapper = mapper;
+
     }
 
     [HttpGet("logar")]
@@ -30,15 +32,15 @@ public class UsuarioController : Controller
         var usuario = new UsuarioViewModel
         {
             Email = "",
-            Password = "",
-            Tipo = ""
+            Password = ""
+           
         };
 
         return View("Logar", usuario);
     }
 
 
-    [HttpGet]
+    [HttpGet("criar")]
     public IActionResult CriarUsuario()
     {
         return View(); 

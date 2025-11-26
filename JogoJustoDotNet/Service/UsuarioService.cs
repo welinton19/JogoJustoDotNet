@@ -2,7 +2,7 @@
 
 namespace JogoJustoDotNet.Service
 {
-    public class UsuarioService : IUsuarioRepository
+    public class UsuarioService : IUsuarioService
     {
         
         private readonly IUsuarioRepository _usuarioRepository;
@@ -12,10 +12,10 @@ namespace JogoJustoDotNet.Service
             _usuarioRepository = usuarioRepository;
         }
 
-        void IUsuarioRepository.CriarUsuario(string email, string password, string tipo) => _usuarioRepository.CriarUsuario(email, password, tipo);
+        void IUsuarioService.CriarUsuario(string email, string password, string tipo) => _usuarioRepository.CriarUsuario(email, password, tipo);
 
 
-        bool IUsuarioRepository.ValidarLogin(string email, string password)
+        bool IUsuarioService.ValidarLogin(string email, string password)
         {
             var validarLogin = _usuarioRepository.ValidarLogin(email, password);
             return validarLogin;

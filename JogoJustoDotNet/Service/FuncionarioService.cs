@@ -3,7 +3,7 @@ using JogoJustoDotNet.Models;
 
 namespace JogoJustoDotNet.Service;
 
-public class FuncionarioService : IFuncionarioRepository
+public class FuncionarioService : IFuncionarioService
 {
     private readonly IFuncionarioRepository _funcionarioRepository;
 
@@ -15,18 +15,23 @@ public class FuncionarioService : IFuncionarioRepository
     public void DeletarFuncionario(int id) => _funcionarioRepository.DeletarFuncionario(id);
 
 
-    void IFuncionarioRepository.AtualizarFuncionario(int id, string nome, string cargo, decimal salario) => _funcionarioRepository.AtualizarFuncionario(id, nome, cargo, salario);
+    void IFuncionarioService.AtualizarFuncionario(int id, string nome, string cargo, decimal salario) => _funcionarioRepository.AtualizarFuncionario(id, nome, cargo, salario);
 
 
-    FuncionarioModel IFuncionarioRepository.ObterFuncionario(int id) => _funcionarioRepository.ObterFuncionario(id);
+    FuncionarioModel IFuncionarioService.ObterFuncionario(int id) => _funcionarioRepository.ObterFuncionario(id);
 
 
-    void IFuncionarioRepository.CriarFuncionario(string nome, string cargo, decimal salario) => _funcionarioRepository.CriarFuncionario(nome, cargo, salario);
+    void IFuncionarioService.CriarFuncionario(string nome, string cargo, decimal salario) => _funcionarioRepository.CriarFuncionario(nome, cargo, salario);
 
 
     
 
 
-    IEnumerable<FuncionarioModel> IFuncionarioRepository.ListarFuncionarios() => _funcionarioRepository.ListarFuncionarios();
+    IEnumerable<FuncionarioModel> IFuncionarioService.ListarFuncionarios() => _funcionarioRepository.ListarFuncionarios();
+
+    
+
+    void IFuncionarioService.DeletarFuncionario(int id)=> _funcionarioRepository.DeletarFuncionario(id);
+
 
 }

@@ -1,4 +1,7 @@
-﻿using JogoJustoDotNet.AppData;
+﻿using AutoMapper;
+using JogoJustoDotNet.AppData;
+using JogoJustoDotNet.Models;
+using JogoJustoDotNet.Service;
 using JogoJustoDotNet.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,91 +12,55 @@ namespace JogoJustoDotNet.Controllers;
 [Route("departamento")]
 public class DepartamentoController : Controller
 {
-    private readonly JogoDbContext _jogoDbContext;
+    private readonly IMapper _mapper;
+    private readonly IDepartamentoService _departamentoService;
 
     private readonly IConfiguration _config;
 
-    public DepartamentoController(JogoDbContext jogoDbContext, IConfiguration config)
+    public DepartamentoController(IConfiguration config, IMapper mapper = null, IDepartamentoService departamentoService = null)
     {
-        _jogoDbContext = jogoDbContext;
+
         _config = config;
-    }
-
-    public IActionResult Createdep()
-    {
-        var dep = new DepartamentoViewModel
-        {
-            NomeDepartamento = "Tecnologia",
-            GerenteId = 3
-        };
-        return View(dep);
-    }
-
-
-    [Authorize(Roles = "Admin, Gerente")]
-    [HttpPost]
-    public IActionResult CriarDepartamento(DepartamentoViewModel departamentoview)
-    {
-        
-        var novoDepartamento = new DepartamentoViewModel
-        {
-            NomeDepartamento = departamentoview.NomeDepartamento,
-
-            Empresa = departamentoview.Empresa
-
-
-        };
-
-        //_jogoDbContext.Departamento.Add(novoDepartamento);
-        //_jogoDbContext.SaveChanges();
-        return View(novoDepartamento);
-    }
-
-    [Authorize(Roles = "Admin, Gerente")]
-    [HttpPut("atualizar/{id}")]
-    public IActionResult AtualizarDepartamento(int id, [FromBody] Models.DepartamentoModel departamentoAtualizado)
-    {
-        var departamentoExistente = _jogoDbContext.Departamento.Find(id);
-        if (departamentoExistente == null)
-        {
-            return NotFound("Departamento não encontrado.");
-        }
-        departamentoExistente.NomeDepartamento = departamentoAtualizado.NomeDepartamento;
-        departamentoExistente.GerenteId = departamentoAtualizado.GerenteId;
-        departamentoExistente.Empresa = departamentoAtualizado.Empresa;
-        _jogoDbContext.SaveChanges();
-        return Ok(departamentoExistente);
+        _mapper = mapper;
+        _departamentoService = departamentoService;
     }
 
     [HttpGet]
-    public IActionResult ObterDepartamentos()
+    public IActionResult CriarDepartamento()
     {
-        var departamentos = _jogoDbContext.Departamento.ToList();
-        return Ok(departamentos);
-    }
-
-    [HttpGet("{id}")]
-    public IActionResult ObterDepartamentoPorId(int id)
-    {
-        var departamento = _jogoDbContext.Departamento.Find(id);
-        if (departamento == null)
+        var departamento = new DepartamentoViewModel
         {
-            return NotFound("Departamento não encontrado.");
-        }
-        return Ok(departamento);
+            NomeDepartamento = "Recursos Humanos"
+
+        };
+        return View(departamento);
+
+
     }
 
-    [Authorize(Roles = "Admin, Gerente")]
+    [HttpPost]
+    public IActionResult CriarDepartamento(DepartamentoModel departamentoview)
+    {
+        var departamento = new DepartamentoViewModel
+        {
+            NomeDepartamento = departamentoview.NomeDepartamento
+        };
+        _departamentoService.AdicionarDepartamento(departamento);
+        return CreatedAtAction(nameof(CriarDepartamento), new { id = departamento }, departamento);
+    }
+
+    [HttpGet]
+    public IActionResult ObterTodosDepartamentos()
+    {
+        var departamentos = _departamentoService.ObterTodosDepartamentos();
+        return View(departamentos);
+    }
+    
+    [Authorize]
     [HttpDelete("deletar/{id}")]
     public IActionResult DeletarDepartamento(int id)
     {
-        var departamentoExistente = _jogoDbContext.Departamento.Find(id);
-        if (departamentoExistente == null)
-        {
-            return NotFound("Departamento não encontrado.");
-        }
-        _jogoDbContext.Departamento.Remove(departamentoExistente);
-        _jogoDbContext.SaveChanges();
-        return Ok("Departamento deletado com sucesso.");
+        _departamentoService.DeletarDepartamento(id);
+        return NoContent();
     }
 }

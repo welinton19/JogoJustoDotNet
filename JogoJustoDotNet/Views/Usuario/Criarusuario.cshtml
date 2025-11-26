@@ -1,6 +1,8 @@
 ﻿
-@page "/criarusuario";
+
+
 @model JogoJustoDotNet.ViewModels.UsuarioViewModel
+
 @{
 	ViewData["Title"] = "Novo Usuario";
 }
@@ -16,7 +18,7 @@
         background: #f4f6f8;
     }
 
-    .login-card {
+    .card-criar-usuario {
         width: 360px;
         margin: 80px auto;
         padding: 24px;
@@ -62,25 +64,26 @@
 </style>
 <body>
 	<h1>Novo Usuario</h1>
-	<div cass="card-criar-usuario">
-		<form asp-action="Criar" asp-controller="CriarUsuario">
+	<div class="card-criar-usuario">
+        <form method="post" asp-action="criar" asp-controller="CriarUsuario">
+
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
 				<label asp-for="Email"></label>
-				<input asp-for="Email" class="form-gorup" />
+                <input asp-for="Email" class="form-gorup" type="text" />
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="Password"></label>
-				<input asp-for="Password" class="form-gorup" />
+                <input asp-for="Password" class="form-gorup" type="password" />
 				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="Tipo"></label>
-				<input asp-for="Tipo" class="form-gorup" />
+                <input asp-for="Tipo" class="form-gorup" type="text" />
 				<span asp-validation-for="Tipo" class="text-danger"></span>
 			</div>
-			<button type="submit">Cadastrar</button>
+			<button type="submit" asp-route="login">Cadastrar</button>
 		</form>
 
 	</div>

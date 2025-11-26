@@ -4,21 +4,21 @@ using JogoJustoDotNet.Models;
 
 namespace JogoJustoDotNet.Service;
 
-public class DepartamentoService : IDepartamendoService
+public class DepartamentoService : IDepartamentoService
 {
 
-    private readonly IDepartamentoRepositry _dprepositoy;
+    private readonly IDepartamentoRepository _dprepositoy;
 
-    public DepartamentoService(IDepartamentoRepositry dprepositoy)
+    public DepartamentoService(IDepartamentoRepository dprepositoy)
     {
         _dprepositoy = dprepositoy;
     }
 
-    void IDepartamendoService.AtualizarDepartamento(int id, string novoNome) => _dprepositoy.UpdateDepartamento(new DepartamentoModel { IdDepartamento = id, NomeDepartamento = novoNome });
+    void IDepartamentoService.AtualizarDepartamento(int id, string novoNome) => _dprepositoy.UpdateDepartamento(new DepartamentoModel { IdDepartamento = id, NomeDepartamento = novoNome });
 
-    void IDepartamendoService.CriarDepartamento(string nome)=> _dprepositoy.CreateDepartamento(new DepartamentoModel { NomeDepartamento = nome });
+    void IDepartamentoService.CriarDepartamento(string nome)=> _dprepositoy.CreateDepartamento(new DepartamentoModel { NomeDepartamento = nome });
 
-    void IDepartamendoService.DeletarDepartamento(int id)
+    void IDepartamentoService.DeletarDepartamento(int id)
     {
         var departamento = _dprepositoy.GetDepartamentoById(id);
         if (departamento != null)
@@ -27,9 +27,9 @@ public class DepartamentoService : IDepartamendoService
         }
     }
 
-    DepartamentoModel IDepartamendoService.ObterDepartamentoPorId(int id)=> _dprepositoy.GetDepartamentoById(id);
+    DepartamentoModel IDepartamentoService.ObterDepartamentoPorId(int id)=> _dprepositoy.GetDepartamentoById(id);
 
 
-    IEnumerable<DepartamentoModel> IDepartamendoService.ObterTodosDepartamentos()=> _dprepositoy.GetAllDepartamentos();
+    IEnumerable<DepartamentoModel> IDepartamentoService.ObterTodosDepartamentos()=> _dprepositoy.GetAllDepartamentos();
 
 }

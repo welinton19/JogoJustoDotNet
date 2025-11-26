@@ -1,5 +1,6 @@
 using AutoMapper;
 using JogoJustoDotNet.AppData;
+using JogoJustoDotNet.AppData.Repository;
 using JogoJustoDotNet.Auth;
 using JogoJustoDotNet.Models;
 using JogoJustoDotNet.Service;
@@ -39,7 +40,7 @@ builder.Services.AddAuthentication(options =>
 });
 #endregion
 
-builder.Services.AddScoped<ITokenService, TokenService>();
+
 
 builder.Services.AddAuthorization(options =>
 {
@@ -49,18 +50,36 @@ builder.Services.AddAuthorization(options =>
         policy.Requirements.Add(new RoleRequeriment("User")));
 });
 
+#region Injeção de ISercevice e IRepository
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();
+builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+builder.Services.AddScoped<IMetaEsgRepository, MetaEsgRepository>();
+builder.Services.AddScoped<IDepartamentoRepository, DepartamentoRepository>();
+
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IFuncionarioService, FuncionarioService>();
+builder.Services.AddScoped<IEmpresaService, EmpresaService>();
+builder.Services.AddScoped<IMetaEsgService, MetaEsgService>();
+builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+
+
+#endregion
+
 
 //#region Automapper
-//var mapperConfig = new AutoMapper.MapperConfiguration(cfg =>
+//var mapperConfig = new MapperConfiguration(cfg =>
 //{
 //    cfg.AllowNullCollections = true;
 //    cfg.AllowNullDestinationValues = true;
 
-//    cfg.CreateMap<UsuarioModel,UsuarioViewModel>();
-//    cfg.CreateMap<UsuarioViewModel,UsuarioModel>();
-//    cfg.CreateMap<FuncionarioModel,FuncionarioViewModel>();
-//    cfg.CreateMap<FuncionarioViewModel,FuncionarioModel>();
-//}));
+//    cfg.CreateMap<UsuarioModel, UsuarioViewModel>();
+//    cfg.CreateMap<UsuarioViewModel, UsuarioModel>();
+//    cfg.CreateMap<FuncionarioModel, FuncionarioCreatedViewModel>();
+//    cfg.CreateMap<FuncionarioCreatedViewModel, FuncionarioModel>();
+//});
 //IMapper mapper = mapperConfig.CreateMapper();
 //builder.Services.AddSingleton(mapper);
 //#endregion

@@ -1,5 +1,7 @@
-﻿using JogoJustoDotNet.AppData;
+﻿using AutoMapper;
+using JogoJustoDotNet.AppData;
 using JogoJustoDotNet.Models;
+using JogoJustoDotNet.Service;
 using JogoJustoDotNet.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,14 +12,17 @@ namespace JogoJustoDotNet.Controllers;
 [Route("empresa")]
 public class EmpresaController : Controller
 {
-    private readonly JogoDbContext _jogoDbContext;
+    private readonly IMapper _mapper;
+    private readonly IEmpresaService _empresaService;
 
     private readonly IConfiguration _config;
 
-    public EmpresaController(JogoDbContext jogoDbContext, IConfiguration config)
+    public EmpresaController( IConfiguration config, IEmpresaService empresaService, IMapper mapper = null)
     {
-        _jogoDbContext = jogoDbContext;
+
         _config = config;
+        _empresaService = empresaService;
+        _mapper = mapper;
     }
 
     public IActionResult criarempresa()
@@ -47,8 +52,7 @@ public class EmpresaController : Controller
             Telefone = empresaview.Telefone
             
         };
-        _jogoDbContext.Empresa.Add(empresaview);
-        _jogoDbContext.SaveChanges();
+        _empresaService.AdicionarEmpresa(empresa);
         return CreatedAtAction(nameof(CriarEmpresa), new { id = empresa }, empresa);
     }
 
@@ -57,46 +61,27 @@ public class EmpresaController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult AtualizarEmpresa(int id, [FromBody] Models.EmpresaModel empresaAtualizada)
     {
-        var empresaExistente = _jogoDbContext.Empresa.Find(id);
-        if (empresaExistente == null)
-        {
-            return NotFound("Empresa não encontrada.");
-        }
-        empresaExistente.Nome = empresaAtualizada.Nome;
-        empresaExistente.InscricaoEstadual = empresaAtualizada.InscricaoEstadual;
-        empresaExistente.Endereco = empresaAtualizada.Endereco;
-        empresaExistente.Telefone = empresaAtualizada.Telefone;
-        _jogoDbContext.SaveChanges();
-        return Ok(empresaExistente);
+       _empresaService.AtualizarEmpresa(id, empresaAtualizada);
+        return View(empresaAtualizada);
+
     }
     [HttpGet]
     public IActionResult ObterEmpresas()
     {
-        var empresas = _jogoDbContext.Empresa.ToList();
+        var empresas = _empresaService.ListarEmpresas();
         return Ok(empresas);
     }
-    [HttpGet("{id}")]
-    public IActionResult ObterEmpresaPorId(int id)
+
+    public IEmpresaService Get_empresaService()
     {
-        var empresa = _jogoDbContext.Empresa.Find(id);
-        if (empresa == null)
-        {
-            return NotFound("Empresa não encontrada.");
-        }
-        return Ok(empresa);
+        return _empresaService;
     }
 
     [Authorize(Roles = "Admin")]
     [HttpDelete("deletar/{id}")]
-    public IActionResult DeletarEmpresa(int id)
+    public IActionResult DeletarEmpresa(int id, IEmpresaService _empresaService)
     {
-        var empresaExistente = _jogoDbContext.Empresa.Find(id);
-        if (empresaExistente == null)
-        {
-            return NotFound("Empresa não encontrada.");
-        }
-        _jogoDbContext.Empresa.Remove(empresaExistente);
-        _jogoDbContext.SaveChanges();
-        return Ok("Empresa deletada com sucesso.");
+        _empresaService.DeletarEmpresa(id);
+        return Ok();
     }
 }
