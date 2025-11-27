@@ -2,11 +2,11 @@
 
 namespace JogoJustoDotNet.AppData.Repository;
 
-public class EmpreaRepository : IEmpresaRepository
+public class EmpresaRepository : IEmpresaRepository
 {
     private readonly JogoDbContext _jogoDbContext;
 
-    public EmpreaRepository(JogoDbContext jogoDbContext)
+    public EmpresaRepository(JogoDbContext jogoDbContext)
     {
         _jogoDbContext = jogoDbContext;
     }

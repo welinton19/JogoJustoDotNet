@@ -4,32 +4,32 @@ using JogoJustoDotNet.Models;
 
 namespace JogoJustoDotNet.Service;
 
-public class DepartamentoService : IDepartamendoService
+public class DepartamentoService : IDepartamentoService
 {
 
-    private readonly IDepartamentoRepositry _dprepositoy;
+    private readonly IDepartamentoRepository _dprepository;
 
-    public DepartamentoService(IDepartamentoRepositry dprepositoy)
+    public DepartamentoService(IDepartamentoRepository dprepository)
     {
-        _dprepositoy = dprepositoy;
+        _dprepository = dprepository;
     }
 
-    void IDepartamendoService.AtualizarDepartamento(int id, string novoNome) => _dprepositoy.UpdateDepartamento(new DepartamentoModel { IdDepartamento = id, NomeDepartamento = novoNome });
+    public void AtualizarDepartamento(int id, string novoNome) => _dprepository.UpdateDepartamento(new DepartamentoModel { IdDepartamento = id, NomeDepartamento = novoNome });
 
-    void IDepartamendoService.CriarDepartamento(string nome)=> _dprepositoy.CreateDepartamento(new DepartamentoModel { NomeDepartamento = nome });
+    public void CriarDepartamento(string nome)=> _dprepository.CreateDepartamento(new DepartamentoModel { NomeDepartamento = nome });
 
-    void IDepartamendoService.DeletarDepartamento(int id)
+   public void DeletarDepartamento(int id)
     {
-        var departamento = _dprepositoy.GetDepartamentoById(id);
+        var departamento = _dprepository.GetDepartamentoById(id);
         if (departamento != null)
         {
-            _dprepositoy.DeleteDepartamentoModel(departamento);
+            _dprepository.DeleteDepartamentoModel(departamento);
         }
     }
 
-    DepartamentoModel IDepartamendoService.ObterDepartamentoPorId(int id)=> _dprepositoy.GetDepartamentoById(id);
+    public DepartamentoModel ObterDepartamentoPorId(int id)=> _dprepository.GetDepartamentoById(id);
 
 
-    IEnumerable<DepartamentoModel> IDepartamendoService.ObterTodosDepartamentos()=> _dprepositoy.GetAllDepartamentos();
+    public IEnumerable<DepartamentoModel> ObterTodosDepartamentos()=> _dprepository.GetAllDepartamentos();
 
 }

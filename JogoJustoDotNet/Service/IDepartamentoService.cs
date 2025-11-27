@@ -2,7 +2,7 @@
 
 namespace JogoJustoDotNet.Service;
 
-public interface IDepartamendoService
+public interface IDepartamentoService
 {
     void CriarDepartamento(string nome);
     void AtualizarDepartamento(int id, string novoNome);

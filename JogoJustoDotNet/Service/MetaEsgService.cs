@@ -3,11 +3,11 @@ using JogoJustoDotNet.Models;
 
 namespace JogoJustoDotNet.Service;
 
-public class MetaEsfService : IMetaEsgRepository
+public class MetaEsgService : IMetaEsgService
 {
    private readonly IMetaEsgRepository _metaEsgRepository;
 
-    public MetaEsfService(IMetaEsgRepository metaEsgRepository)
+    public MetaEsgService(IMetaEsgRepository metaEsgRepository)
     {
         _metaEsgRepository = metaEsgRepository;
     }
